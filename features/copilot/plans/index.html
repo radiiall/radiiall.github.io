@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RADIIAL BROADCAST NETWORK | Sitio Oficial</title>
-  <meta name="description" content="Escucha RADIIAL BROADCAST NETWORK en vivo" />
+  <title>RADIIAL En Vivo | Sitio Oficial</title>
+  <meta name="description" content="Escucha RADIIAL en vivo" />
   <style>
     :root{
       --bg-1:#0d0d1a; --bg-2:#1a1a2e; --card:#181828;
@@ -68,6 +68,9 @@
 
     /* small helpers */
     .sr-only{ position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+
+    .audio-player{ width:100%; border-radius:12px; background:#0b0b0f; padding:12px; margin-bottom:18px; }
+    .audio-player audio{ width:100%; }
   </style>
 </head>
 <body>
@@ -80,13 +83,20 @@
       </div>
     </div>
 
-    <!-- Reproductor: mantuve el iframe original. Si prefieres un <audio> nativo, elige 'Mejorado' en la tarea. -->
-    <iframe src="https://radiodial.radiostream321.com/" class="iframe-player" title="RADIIAL BROADCAST NETWORK - reproductor en vivo" style="width:100%;height:160px;border:none;border-radius:12px;margin-bottom:18px;background:#111;"></iframe>
+    <!-- Reproductor actualizado: se usa un reproductor <audio> nativo apuntando al stream. -->
+    <!-- Nota: no incluimos credenciales administrativas en el repo. El admin URL que compartiste no es un stream directo; el stream público típico para Shoutcast es 'http://host:port/;stream' o similar. -->
+    <div class="audio-player">
+      <audio controls preload="none">
+        <source src="http://uk16freenew.listen2myradio.com:37216/;stream" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio. <a href="http://uk16freenew.listen2myradio.com:37216/;stream" target="_blank" rel="noopener noreferrer">Escuchar en nueva pestaña</a>.
+      </audio>
+      <p style="color:#a0a0b8;font-size:13px;margin:8px 0 0;">Si no oyes audio, intenta abrir el enlace en una pestaña nueva o verifica el mountpoint con tu proveedor (por ejemplo '/;stream' o '/stream').</p>
+    </div>
 
     <!-- Carousel -->
     <section class="carousel" aria-roledescription="carrusel" aria-label="Galería de imágenes de RADIIAL BROADCAST NETWORK">
       <div class="slides" id="slides" aria-live="off">
-        <!-- Reemplaza las rutas de ejemplo por tus imágenes reales en assets/images/ -->
+        <!-- Placeholders: reemplaza por tus imágenes reales en assets/images/ -->
         <div class="slide"><img src="/assets/images/slide1.svg" alt="Foto 1 - Estudio de RADIIAL" loading="lazy"></div>
         <div class="slide"><img src="/assets/images/slide2.svg" alt="Foto 2 - Equipo en cabina" loading="lazy"></div>
         <div class="slide"><img src="/assets/images/slide3.svg" alt="Foto 3 - Presentador en vivo" loading="lazy"></div>
