@@ -1,108 +1,184 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Radio Dial En Vivo | Sitio Oficial</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RADIIAL En Vivo | Sitio Oficial</title>
+  <meta name="description" content="Escucha RADIIAL en vivo" />
   <style>
-    body {
+    :root{
+      --bg-1:#0d0d1a; --bg-2:#1a1a2e; --card:#181828;
+      --accent:#00ffcc; --muted:#a0a0b8; --btn-focus: #66ffd9;
+    }
+    *{box-sizing:border-box}
+    body{
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      text-align: center;
-      background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 100%);
-      color: white;
-      padding: 30px 15px;
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
+      text-align:center;
+      background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+      color: #fff; padding:30px 15px; margin:0; min-height:100vh;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
     }
-    .player-container {
-      background: #181828;
-      padding: 35px 25px;
-      border-radius: 25px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-      max-width: 420px;
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid #00ffcc33;
+    .player-container{
+      background:var(--card); padding:30px 20px; border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.8); max-width:900px; width:100%;
+      border:1px solid #00ffcc33;
     }
-    .logo-placeholder {
-      font-size: 64px;
-      margin-bottom: 15px;
-      animation: pulse 2s infinite;
+    .header {
+      display:flex; gap:12px; align-items:center; justify-content:center; margin-bottom:12px;
     }
-    h1 {
-      color: #00ffcc;
-      margin: 0 0 8px 0;
-      font-size: 30px;
-      letter-spacing: 1px;
-    }
-    p {
-      color: #a0a0b8;
-      font-size: 15px;
-      margin: 0 0 25px 0;
-    }
-    audio {
-      width: 100%;
-      outline: none;
-      margin-bottom: 25px;
-    }
-    .btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-    }
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      border-radius: 12px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 15px;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-    .btn-apk { background: linear-gradient(90deg, #28a745, #20c997); }
-    .btn-ws  { background: #25D366; }
-    .btn-fb  { background: #1877F2; }
-    .btn-ig  { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .logo-placeholder{ font-size:48px; animation:pulse 2s infinite; }
+    h1{ color:var(--accent); margin:0; font-size:28px; letter-spacing:1px; }
+    p.lead{ color:var(--muted); margin:6px 0 18px; font-size:14px; }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+    /* Carousel */
+    .carousel{
+      position:relative; width:100%; max-width:820px; margin:0 auto 20px;
+      border-radius:12px; overflow:hidden; background:#0b0b0f;
     }
+    .slides{ display:flex; transition:transform .45s ease; will-change:transform; }
+    .slide{ min-width:100%; user-select:none; -webkit-user-drag:none; }
+    .slide img{ display:block; width:100%; height:360px; object-fit:cover; background:#111; }
+    @media (max-width:600px){ .slide img{ height:200px; } }
+
+    .carousel-controls{
+      display:flex; gap:8px; justify-content:center; margin-top:12px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px; border-radius:10px; color:#fff; text-decoration:none;
+      font-weight:600; cursor:pointer; border:none;
+    }
+    .btn:focus{ outline:3px solid var(--btn-focus); outline-offset:2px; }
+    .btn-apk{ background: linear-gradient(90deg,#28a745,#20c997); }
+    .btn-ws{ background:#25D366; }
+    .btn-fb{ background:#1877F2; }
+    .btn-ig{ background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+
+    .nav-arrow{
+      position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.35);
+      border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center;
+      color:#fff; border:1px solid rgba(255,255,255,0.06); cursor:pointer;
+    }
+    .nav-arrow.left{ left:12px; }
+    .nav-arrow.right{ right:12px; }
+    .nav-dot{ width:10px; height:10px; border-radius:50%; background:#777; opacity:.9; border:none; }
+    .nav-dot[aria-pressed="true"]{ background:var(--accent); box-shadow:0 0 8px var(--accent); }
+
+    @keyframes pulse{ 0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);} }
+
+    /* small helpers */
+    .sr-only{ position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+
+    .audio-player{ width:100%; border-radius:12px; background:#0b0b0f; padding:12px; margin-bottom:18px; }
+    .audio-player audio{ width:100%; }
   </style>
 </head>
 <body>
-
-  <div class="player-container">
-    <div class="logo-placeholder">📻</div>
-    <h1>Radio Dial</h1>
-    <p>Escúchanos en vivo desde nuestra web oficial</p>
-
-    <audio controls autoplay>
-      <source src="https://radiodial.radiostream321.com/stream" type="audio/mpeg">
-      Tu navegador no soporta el reproductor de audio.
-    </audio>
-
-    <div class="btn-group">
-      <a href="#" class="btn btn-apk" target="_blank">📱 Descargar App Android (APK)</a>
-      <a href="https://wa.me/56900000000" class="btn btn-ws" target="_blank">💬 Escríbenos al WhatsApp</a>
-      <a href="https://facebook.com" class="btn btn-fb" target="_blank">📘 Síguenos en Facebook</a>
-      <a href="https://instagram.com" class="btn btn-ig" target="_blank">📸 Síguenos en Instagram</a>
+  <main class="player-container" role="main" aria-labelledby="titulo-radio">
+    <div class="header">
+      <div class="logo-placeholder" aria-hidden="true">📻</div>
+      <div>
+        <h1 id="titulo-radio">RADIIAL BROADCAST NETWORK</h1>
+        <p class="lead">Escúchanos en vivo desde nuestra web oficial</p>
+      </div>
     </div>
-  </div>
 
+    <!-- Reproductor actualizado: se usa un reproductor <audio> nativo apuntando al stream. -->
+    <!-- Nota: no incluimos credenciales administrativas en el repo. El admin URL que compartiste no es un stream directo; el stream público típico para Shoutcast es 'http://host:port/;stream' o similar. -->
+    <div class="audio-player">
+      <audio controls preload="none">
+        <source src="http://uk16freenew.listen2myradio.com:37216/;stream" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio. <a href="http://uk16freenew.listen2myradio.com:37216/;stream" target="_blank" rel="noopener noreferrer">Escuchar en nueva pestaña</a>.
+      </audio>
+      <p style="color:#a0a0b8;font-size:13px;margin:8px 0 0;">Si no oyes audio, intenta abrir el enlace en una pestaña nueva o verifica el mountpoint con tu proveedor (por ejemplo '/;stream' o '/stream').</p>
+    </div>
+
+    <!-- Carousel -->
+    <section class="carousel" aria-roledescription="carrusel" aria-label="Galería de imágenes de RADIIAL BROADCAST NETWORK">
+      <div class="slides" id="slides" aria-live="off">
+        <!-- Placeholders: reemplaza por tus imágenes reales en assets/images/ -->
+        <div class="slide"><img src="/assets/images/slide1.svg" alt="Foto 1 - Estudio de RADIIAL" loading="lazy"></div>
+        <div class="slide"><img src="/assets/images/slide2.svg" alt="Foto 2 - Equipo en cabina" loading="lazy"></div>
+        <div class="slide"><img src="/assets/images/slide3.svg" alt="Foto 3 - Presentador en vivo" loading="lazy"></div>
+      </div>
+
+      <!-- Arrows -->
+      <button class="nav-arrow left" id="prevBtn" aria-label="Anterior" title="Anterior">&lt;</button>
+      <button class="nav-arrow right" id="nextBtn" aria-label="Siguiente" title="Siguiente">&gt;</button>
+
+      <!-- Dots -->
+      <div class="carousel-controls" role="tablist" aria-label="Seleccionar imagen" id="dots" style="margin-top:10px;"></div>
+    </section>
+
+    <div class="btn-group" style="display:flex;flex-direction:column;gap:12px;margin-top:4px;">
+      <a href="https://drive.google.com/uc?export=download&id=1WwMjLKOAxzGiqqo0TzIDVnjOPypaYiOx" class="btn btn-apk" target="_blank" rel="noopener noreferrer" title="Descargar APK">📱 Descargar App Android (APK)</a>
+      <a href="https://wa.me/56900000000" class="btn btn-ws" target="_blank" rel="noopener noreferrer" title="WhatsApp">💬 Escríbenos al WhatsApp</a>
+      <a href="https://facebook.com" class="btn btn-fb" target="_blank" rel="noopener noreferrer" title="Facebook">📘 Síguenos en Facebook</a>
+      <a href="https://instagram.com" class="btn btn-ig" target="_blank" rel="noopener noreferrer" title="Instagram">📸 Síguenos en Instagram</a>
+    </div>
+  </main>
+
+  <script>
+    // Carrusel simple, accesible y responsive
+    (function(){
+      const slidesEl = document.getElementById('slides');
+      const slides = Array.from(slidesEl.children);
+      const dotsEl = document.getElementById('dots');
+      let index = 0;
+      const total = slides.length;
+
+      // crear dots
+      slides.forEach((s, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'nav-dot';
+        btn.setAttribute('aria-pressed', i===0 ? 'true' : 'false');
+        btn.setAttribute('aria-label', 'Ir a la imagen ' + (i+1));
+        btn.setAttribute('role','tab');
+        btn.addEventListener('click', () => { goTo(i); });
+        dotsEl.appendChild(btn);
+      });
+
+      const update = () => {
+        slidesEl.style.transform = `translateX(-${index * 100}%)`;
+        // actualizar aria-pressed
+        Array.from(dotsEl.children).forEach((d, i) => d.setAttribute('aria-pressed', i===index ? 'true' : 'false'));
+      };
+
+      window.goTo = function(i){
+        index = (i + total) % total;
+        update();
+      };
+
+      document.getElementById('prevBtn').addEventListener('click', () => { goTo(index-1); });
+      document.getElementById('nextBtn').addEventListener('click', () => { goTo(index+1); });
+
+      // soporte teclado
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') goTo(index-1);
+        if (e.key === 'ArrowRight') goTo(index+1);
+      });
+
+      // soporte swipe táctil (básico)
+      let startX = null;
+      slidesEl.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
+      slidesEl.addEventListener('touchend', (e) => {
+        if (startX === null) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        if (dx > 40) goTo(index-1);
+        else if (dx < -40) goTo(index+1);
+        startX = null;
+      });
+
+      // si quieres autoplay, descomenta lo siguiente:
+      // setInterval(()=> goTo(index+1), 5000);
+
+      // inicializar
+      update();
+    })();
+  </script>
+
+  <noscript>
+    <p style="color:#f3b3b3">Activa JavaScript para ver el carrusel. Si no quieres JS, reemplaza la sección del carrusel por imágenes estáticas.</p>
+  </noscript>
 </body>
 </html>
