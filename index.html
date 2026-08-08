@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Dial En Vivo | Sitio Oficial</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 100%);
+      color: white;
+      padding: 30px 15px;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    .player-container {
+      background: #181828;
+      padding: 35px 25px;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      max-width: 420px;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #00ffcc33;
+    }
+    .logo-placeholder {
+      font-size: 64px;
+      margin-bottom: 15px;
+      animation: pulse 2s infinite;
+    }
+    h1 {
+      color: #00ffcc;
+      margin: 0 0 8px 0;
+      font-size: 30px;
+      letter-spacing: 1px;
+    }
+    p {
+      color: #a0a0b8;
+      font-size: 15px;
+      margin: 0 0 25px 0;
+    }
+    audio {
+      width: 100%;
+      outline: none;
+      margin-bottom: 25px;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+    .btn-apk { background: linear-gradient(90deg, #28a745, #20c997); }
+    .btn-ws  { background: #25D366; }
+    .btn-fb  { background: #1877F2; }
+    .btn-ig  { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="player-container">
+    <div class="logo-placeholder">📻</div>
+    <h1>Radio Dial</h1>
+    <p>Escúchanos en vivo desde nuestra web oficial</p>
+
+    <audio controls autoplay>
+      <source src="https://radiodial.radiostream321.com/stream" type="audio/mpeg">
+      Tu navegador no soporta el reproductor de audio.
+    </audio>
+
+    <div class="btn-group">
+      <a href="#" class="btn btn-apk" target="_blank">📱 Descargar App Android (APK)</a>
+      <a href="https://wa.me/56900000000" class="btn btn-ws" target="_blank">💬 Escríbenos al WhatsApp</a>
+      <a href="https://facebook.com" class="btn btn-fb" target="_blank">📘 Síguenos en Facebook</a>
+      <a href="https://instagram.com" class="btn btn-ig" target="_blank">📸 Síguenos en Instagram</a>
+    </div>
+  </div>
+
+</body>
+</html>
